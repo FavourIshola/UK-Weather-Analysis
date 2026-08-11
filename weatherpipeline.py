@@ -22,6 +22,18 @@ current = data["current"]
 print("Time:", current["time"])
 print("Temperature:", current["temperature_2m"], "°C")
 print("Rain:", current["rain"], "mm")
-print("Wind:", current["wind_speed_10m"], "km/h")
+print("Wind Speed:", current["wind_speed_10m"], "km/h")
 
+#pandas table
+weather = {
+    "time": current["time"],
+    "temperature": current["temperature_2m"],
+    "rain": current["rain"],
+    "wind_speed": current["wind_speed_10m"]
+}
+#taking my weather data and turning it into a DataFrame(table)
+df = pd.DataFrame([weather])
+print(df)
 
+#save pandas table as a CSV file
+df.to_csv("weather_data.csv", index=False)
