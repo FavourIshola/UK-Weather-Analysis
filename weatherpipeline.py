@@ -1,5 +1,6 @@
 import requests
 
+#API
 url = "https://api.open-meteo.com/v1/forecast"
 
 params = {
@@ -9,4 +10,17 @@ params = {
 }
 
 response = requests.get(url, params=params)
-print(response.json())
+
+#Python
+data = response.json()
+
+#current
+current = data["current"]
+
+#temperature, rain, wind
+print("Time:", current["time"])
+print("Temperature:", current["temperature_2m"], "°C")
+print("Rain:", current["rain"], "mm")
+print("Wind:", current["wind_speed_10m"], "km/h")
+
+
