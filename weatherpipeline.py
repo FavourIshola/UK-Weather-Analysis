@@ -4,33 +4,54 @@ import pandas as pd
 #API
 url = "https://api.open-meteo.com/v1/forecast"
 
-params = {
-    "latitude" : 51.51147,
-    "longitude" : -0.13078308,
-    "hourly" : "temperature_2m,rain,wind_speed_10m"
+#using more than one city
+cities = {
+    "London": (51.51147, -0.13078308),
+    "Manchester": (53.4809, -2.2374),
+    "Edinburgh": (55.9521, -3.1965),
+    "Birmingham":(52.4814, -1.8998)
 }
 
-response = requests.get(url, params=params)
+#empty list to store all the weather data
+weather_data = []
 
-#Python
-data = response.json()
+#for loop
+for city, coordinates in cities.items():
+    latitude, longitude = coordinates
 
-#hourly
-hourly = data["hourly"]
+    params = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "hourly": "temperature_2m,rain,wind_speed_10m"
+    }
 
-#temperature, rain, wind
-times = hourly["time"]
-temperatures = hourly["temperature_2m"]
-rain = hourly["rain"]
-wind_speed = hourly["wind_speed_10m"]
 
-#pandas table
-df = pd.DataFrame({
-    "time": times,
-    "temperature": temperatures,
-    "rain": rain,
-    "wind_speed": wind_speed
-})
+    response = requests.get(url, params=params)
+
+    #Python
+    data = response.json()
+    
+
+    #hourly
+    hourly = data["hourly"]
+
+    
+    times = hourly["time"]
+    temperatures = hourly["temperature_2m"]
+    rain = hourly["rain"]
+    wind_speeds = hourly["wind_speed_10m"]
+
+    #second for loop
+    for i in range(len(times)):
+        weather_data.append({
+            "city": city, 
+            "time": times[i],
+            "temperature": temperatures[i],
+            "rain": rain[i],
+            "wind_speed": wind_speeds[i]
+        })
+
+df = pd.DataFrame(weather_data)
 
 print(df)
 
