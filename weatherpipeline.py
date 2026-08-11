@@ -28,9 +28,12 @@ for city, coordinates in cities.items():
 
     response = requests.get(url, params=params)
 
-    #Python
-    data = response.json()
-    
+    #if statement
+    if response.status_code == 200: #200 means everything worked
+        data = response.json()
+    else:
+        print("Could not get weather for", city)
+        continue
 
     #hourly
     hourly = data["hourly"]
