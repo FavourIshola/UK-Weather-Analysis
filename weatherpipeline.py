@@ -28,7 +28,7 @@ for city, coordinates in cities.items():
 
     response = requests.get(url, params=params)
 
-    #if statement
+    #if statement FOR ERROR HANDLING
     if response.status_code == 200: #200 means everything worked
         data = response.json()
     else:
