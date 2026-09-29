@@ -119,4 +119,4 @@ plt.ylabel("Temperature (°C)")
 plt.legend()
 plt.xticks(df["time"] [::12], rotation = 45) #take every 12th value so the x-axis is easier to read
 plt.tight_layout()
-plt.show()
+plt.show()  
